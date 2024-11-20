@@ -17,16 +17,21 @@ class BooksList {
     this.data.forEach(book => {
       const ratingWidth = book.rating * 10;
       const ratingBgc = this.determineRatingBgc(book.rating);
-
-
-      const bookData = {
+      /*const bookData = {
         ...book,
         ratingWidth: ratingWidth,
         ratingBgc: ratingBgc
-      };
+      };*/
+      const bookData = Object.assign({
+        ratingWidth,
+        ratingBgc,
+      }, book);
       const bookHTML = this.bookTemplate(bookData);
       const bookElement = document.createElement('li');
       bookElement.innerHTML = bookHTML.trim();
+      const ratingFill = bookElement.querySelector('.book__rating__fill');
+      ratingFill.style.width = `${ratingWidth}%`;
+      ratingFill.style.background = ratingBgc;
       this.booksList.appendChild(bookElement);
     });
     this.initActions();
